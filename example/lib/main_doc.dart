@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -42,7 +44,26 @@ class _AppState extends State<App> {
         body: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            DrawerHeader(child: SizedBox(height: 160.0)),
+            DrawerHeader(
+                child: Container(
+              height: 160.0,
+              margin: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (_currentItem.author != null) Text('Author: ${_currentItem.author}'),
+                  if (_currentItem.srcLink != null)
+                    InkWell(
+                      child: Text(
+                        'Source: ${_currentItem.srcLink}',
+                        style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+                      ),
+                      onTap: () => window.open(_currentItem.srcLink, _currentItem.srcLink),
+                    ),
+                ],
+              ),
+            )),
             ...templateList.map<Widget>((item) => _buildMenuTile(context, item)),
           ],
         ),
@@ -65,9 +86,11 @@ class _AppState extends State<App> {
     if (item.author != null || item.srcLink != null)
       scaffoldKey.currentState.showSnackBar(SnackBar(
         content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (item.author != null) Text('Author: {$item.author}'),
-            if (item.srcLink != null) Text('Source: {$item.srcLink}'),
+            if (item.author != null) Text('Author: ${item.author}'),
+            if (item.srcLink != null) Text('Source: ${item.srcLink}'),
           ],
         ),
       ));

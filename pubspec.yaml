@@ -14,6 +14,7 @@ dependencies:
   ink_widget: 1.0.0-dev.4
   vibration: 1.7.3
   crypto: 2.1.5
+  overlay_support: 1.0.5
 
 dev_dependencies:
   flutter_test:
